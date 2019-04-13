@@ -16,5 +16,5 @@ Technologies:
 - Javscript
 - Bootstrap/Jquery
 - Firebase
-- Google API
+- Google APIs
 
