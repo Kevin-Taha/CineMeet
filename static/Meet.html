@@ -1,25 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <style>
-      /* Always set the map height explicitly to define the size of the div
-					 * element that contains the map. */
-      #googleMap {
-        height: 90%;
-      }
-      /* Optional: Makes the sample page fill the window. */
-      html,
-      body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-    </style>
+    <meta charset="utf-8" />
+    <!-- Bootstrap-->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" type="text/css" href="Meet.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
   </head>
-  <body>
-    <h1 style="text-align: center">Your MovieMate is waiting for you...</h1>
 
-    <div id="googleMap"></div>
+  <body>
+    <div class="container-fluid">
+      <div class="jumbotron">
+        <h1>Your MovieMate is waiting for you...</h1>
+      </div>
+      <div id="googleMap"></div>
+    </div>
 
     <script>
       function myMap() {
@@ -33,7 +32,6 @@
         );
       }
     </script>
-
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY&callback=myMap"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=&callback=myMap"></script>
   </body>
 </html>

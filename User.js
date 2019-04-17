@@ -2,21 +2,13 @@ var firebase = require("firebase");
 
 class User {
   // Constructor without image
-  constructor(FullName, EmailId, Description, Movies) {
+  constructor(FullName, EmailId, Description) {
     this.FullName = FullName;
     this.EmailId = EmailId;
     this.Description = Description;
-    this.Movies = Movies;
+    this.Movies = [];
   }
-  // Constructor with image
-  // constructor(FullName,EmailId,Description,Movies,Image){
-  // 	this.FullName = FullName;
-  // 	this.EmailId = EmailId;
-  // 	this.Description = Description;
-  // 	this.Movies=Movies;
-  // 	this.Image = Image;
-  // }
-
+  
   //Get Full Name of User
   getFullname() {
     return this.FullName;
@@ -57,14 +49,17 @@ class User {
     this.Movies = movies;
   }
 
-  // Get Image of User
-  getImage() {
-    return this.Image;
+  // Adds Movie to List
+  addMovie(movieName){
+    this.Movies.push(movieName);
   }
-
-  // Set Image of User
-  setImage(image) {
-    this.Image = image;
+  
+  // Removes Movie from List
+  deleteMovie(movieName){
+    let index = this.Movies.indexOf(movieName);
+    if(index > -1){
+      this.Movies = this.Movies.splice(index,1);
+    }
   }
 
   // To JSON

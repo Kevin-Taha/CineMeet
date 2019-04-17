@@ -1,0 +1,29 @@
+#googleMap {
+	height: 90%;
+	width: 100%;
+	margin: 0px;
+	padding: 0px;
+  }
+  html,
+  body {
+	height: 100%;
+	margin: 0px;
+	padding: 0px;
+  }
+  .container-fluid {
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	top: 0;
+	padding: 0;
+  }
+  .jumbotron {
+	padding: 0.5em 0.5em;
+	background-color: #000000;
+	color: #ffffff;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	text-align: center;
+	font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+	  "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  }
