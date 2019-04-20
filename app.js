@@ -20,7 +20,7 @@ const config = JSON.parse(process.env.firebaseConfig);
 firebase.initializeApp(config);
 
 app.get("/", function(req, res) {
-  res.send("Hello World");
+  res.sendFile(__dirname + "/static/LoginScreen.html");
 });
 
 app.get("/Meet", function(req, res) {
@@ -104,5 +104,5 @@ app.post("/coordinates", function(req, res) {
 });
 
 app.listen(port, function() {
-  console.log(`Example app listening on port !`);
+  console.log(`Example app listening on port ` + port);
 });
