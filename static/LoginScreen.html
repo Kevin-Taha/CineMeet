@@ -42,7 +42,8 @@
             response = await response.json();
             
             if ( response.success ){
-                window.location.replace("/FindMovie.html");
+                console.log(response)
+               // window.location.replace("/FindMovie.html");
             }
             else{
                 console.log("Fail, no redirect")
