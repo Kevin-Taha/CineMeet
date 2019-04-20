@@ -6,13 +6,10 @@
 
         email = "Null";
         name = "Null";
-        
+
         function onSignIn(googleUser) {
+            console.log("Authentication Successfull!")
             var profile = googleUser.getBasicProfile();
-            console.log('ID: ' + profile.getId());
-            console.log('Name: ' + profile.getName());
-            console.log('Image URL: ' + profile.getImageUrl());
-            console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present. 
             name = profile.getName();
             email = profile.getEmail();  
             $('#exampleModal').modal('show') 
@@ -24,7 +21,7 @@
             console.log(email);
             description =  document.getElementById("exampleFormControlTextarea1").value;
             console.log(description);
-           // let newUser = new User(name, email, description);
+            let newUser = new User(name, email, description);
             
             
 

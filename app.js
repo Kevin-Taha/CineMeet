@@ -23,6 +23,7 @@ app.get("/", function(req, res) {
   res.sendFile(__dirname + "/static/LoginScreen.html");
   let database = firebase.database();
   let dbRef = database.ref();
+
 });
 
 app.get("/Meet", function(req, res) {
