@@ -21,8 +21,20 @@ firebase.initializeApp(config);
 
 app.get("/", function(req, res) {
   res.sendFile(__dirname + "/static/LoginScreen.html");
+});
+
+app.post('/auth', function(req, res){
   let database = firebase.database();
   let dbRef = database.ref();
+
+  let name = req.body.uname;
+  let email = req.body.uemail;
+  let desc = req.body.udesc;
+
+  user = new User(name, email, desc);
+  user.PushToUserDatabase();
+
+
 
 });
 
