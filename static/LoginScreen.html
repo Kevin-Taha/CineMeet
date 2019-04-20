@@ -6,6 +6,7 @@
 
         email = "Null";
         name = "Null";
+        description = "";
 
         function onSignIn(googleUser) {
             console.log("Authentication Successfull!")
@@ -20,13 +21,12 @@
             $('#exampleModal').modal('show') 
         }
         
-        function newUser(){
+        async function newUser(){
             console.log(name);
             console.log(email);
             console.log(description);
 
             description =  document.getElementById("exampleFormControlTextarea1").value;
-            let newUser = new User(name, email, description);
 
             // Build new user
             let user = { uname: name, uemail: email, udesc: description };
@@ -40,7 +40,13 @@
             body: JSON.stringify(user)
             });
             response = await response.json();
-            console.log(response);
+            
+            if ( response.success ){
+                window.location.replace("/FindMovie.html");
+            }
+            else{
+                console.log("Fail, no redirect")
+            }
 
         }
     </script>
