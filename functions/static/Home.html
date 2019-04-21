@@ -63,12 +63,10 @@
                 var name = invite.Email;
                 var movie = invite.Movie;
                 var param = "/Meet";
-                param += "?lat=" += invite.Coordinates.latitude;
-                param += "&long=" += invite.Coordinates.longitude;
+                param += "?location=" += invite.Location;
               addTableEntry(name, movie, param);
             });
                 
-
         } 
         else {
           // No user is signed in.
@@ -156,9 +154,6 @@
             <td>Remove </td>
             <td><a class="link" href="#">Accept</td>
           </tr>
-
-
-
 
 
 
