@@ -79,22 +79,27 @@ class User {
     let usersRef = dbRef.child("users");
     // Get Unique Key for New User
     return new Promise((resolve, reject) => {
+      console.log("Pushing to User Database after Promise\n");
       usersRef
         .orderByChild("EmailId")
         .equalTo(this.EmailId)
         .once("value", snapshot => {
-          let userKey = null;
+          console.log("Pushing to User Database after value snapshot\n");
           if (snapshot.exists()) {
+            console.log("Not Pushing to User Database after value snapshot\n");
             return resolve(0);
           } else {
+            console.log("Pushing to User Database after else\n");
             let newUserkey = usersRef.push().key;
             let userObject = {};
             // Construct JSON Object for User
             userObject["/users/" + newUserkey] = this.toJSON();
             // Call Update on Object
+            console.log("Pushing to User Database after json\n");
             return dbRef.update(userObject, function() {
               console.log("User Successfully Updated\n"); // Optional callback for success
               console.log("Pushing to User Database Resolving\n");
+              console.log("Exit Pushing to User Database\n");
               return resolve(1);
             });
           }
