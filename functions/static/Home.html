@@ -36,9 +36,41 @@
     function signOut(){
       firebase.auth().signOut();
     }
-      firebase.auth().onAuthStateChanged(function(user) {
+
+    async function getInvites( EmailId ) {
+      let data = { email: EmailId }; // Parameters being sent to server for coordinates
+
+      let response = await fetch("/Invites", {
+        method: "POST", // Since we are sending some data to the server
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      });
+      response = await response.json();
+      return response;
+      console.log(response);
+    }
+
+    firebase.auth().onAuthStateChanged(function(user) {
           if (user) {
             console.log("User Logged IN");
+            email = user.email;
+            invites = getInvites(email);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         } 
         else {
           // No user is signed in.
@@ -46,6 +78,54 @@
         }
     });
   
+
+
+    function addTableEntry(name, movie, param){
+
+      // Get parent id id
+      var table = document.getElementById("table")
+
+      // Create Row entry
+      var row = document.createElement("tr");
+
+      // Create Name entry
+      var nameNode = document.createElement("td");
+      var nameText = document.createTextNode("NAME <CHANGE TO VAR> ");
+      nameNode.appendChild(nameText);
+
+      // Create Movie Entry
+      var movieNode = document.createElement("td");
+      var movieText = document.createTextNode("MOVIE < CHANGE TO VAR> ");
+      movieNode.appendChild(movieText);
+
+      // <td><a class="link" href="#">Accept</td>
+      var linkNode = document.createElement("td");
+      var anchorNode = document.createElement("a");
+      anchorNode.appendChild(document.createTextNode("Accept"));  
+      anchorNode.setAttribute("class", "link");
+      anchorNode.setAttribute("href", "/Meet <CHANGE TO VAR> ")
+      linkNode.appendChild(anchorNode);
+
+      // Add entries to table row
+      row.appendChild(nameNode);
+      row.appendChild(movieNode);
+      row.appendChild(linkNode);
+
+      // Add row to table
+      table.appendChild(row); 
+    }
+
+
+
+
+
+
+
+
+
+
+
+
   </script>
   <body>
     <div class="container-fluid">
@@ -83,22 +163,19 @@
             <th></th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="table">
           <tr>
             <td>John</td>
             <td>Doe</td>
             <td><a class="link" href="#">Accept</td>
           </tr>
-          <tr>
-            <td>Mary</td>
-            <td>Moe</td>
-            <td><a class="link" href="#">Accept</td>
-          </tr>
-          <tr>
-            <td>July</td>
-            <td>Dooley</td>
-            <td><a class="link" href="#">Accept</td>
-          </tr>
+
+
+
+
+
+
+
         </tbody>
       </table>
     </div>
