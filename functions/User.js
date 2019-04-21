@@ -24,8 +24,8 @@ class User {
     return this.EmailId;
   }
 
-  addInvite(movie, email, coordinates) {
-    let data = { Movie: movie, Email: email, Coordinates: coordinates };
+  addInvite(movie, email, location) {
+    let data = { Movie: movie, Email: email, Location: location };
     this.Invites.push(data);
   }
 
@@ -94,6 +94,7 @@ class User {
     let usersRef = dbRef.child("users");
     // Get Unique Key for New User
     let newUserkey = this.UserId;
+    console.log("From PushToUserDatabase \n"+this.toJSON());
     let userObject = {};
     // Construct JSON Object for User
     userObject["/users/" + newUserkey] = this.toJSON();
@@ -152,19 +153,25 @@ class User {
         .orderByChild("EmailId")
         .equalTo(emailId)
         .once("value", function(snapshot) {
-          // For Each Snapshort Resolve Promise Firebase does not know if there is only entry after search
-          snapshot.forEach(function(childSnapshot) {
-            let value = childSnapshot.val();
-            // Create User Object
-            let user = new User(
-              value.FullName,
-              value.EmailId,
-              value.UserId,
-              value.Invites
-            );
-            // Resolve Promise
-            resolve(user);
-          });
+
+          if(snapshot.exists()){
+            snapshot.forEach(function(childSnapshot) {
+              let value = childSnapshot.val();
+              // Create User Object
+              let user = new User(
+                value.FullName,
+                value.EmailId,
+                value.UserId,
+                value.Invites
+              );
+              // Resolve Promise
+              resolve(user);
+            });
+          }
+          else{
+            resolve(null);
+          }
+
         });
     });
   }

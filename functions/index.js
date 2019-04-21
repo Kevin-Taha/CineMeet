@@ -19,8 +19,6 @@ app.use(
   })
 );
 
-//const config = JSON.parse(process.env.firebaseConfig);
-
 var config = {
   apiKey: "AIzaSyBbsYXMSVbJ8_Q7MQ65l7NuCgzZoUihr1o",
   authDomain: "cinemeet252.firebaseapp.com",
@@ -41,8 +39,16 @@ app.post("/auth", function(req, res) {
   let email = req.body.email;
   let uid = req.body.userId;
   console.log(req.body);
-  user = new User(name, email, uid);
-  user.PushToUserDatabase();
+  // user = new User(name, email, uid);
+  // user.addInvite("DragonBall", "rawat.yatharth@gmail.com", {
+  //   latitude: 355,
+  //   longitude: 5454
+  // });
+  // user.addInvite("DragonBall1", "rawat.yatharth@gmail.com1", {
+  //   latitude: 355,
+  //   longitude: 54541
+  // });
+  // user.PushToUserDatabase();
   res.json({ success: true });
 });
 
@@ -55,44 +61,30 @@ app.get("/FindMovie", function(req, res) {
 });
 
 app.get("/Home", function(req, res) {
-  console.log("Done\n");
   res.sendFile(__dirname + "/static/Home.html");
 });
 
-app.get("/SendInvite", function(req, res) {
-  let database = firebase.database();
-  let dbRef = database.ref();
-  // Get Node with all users
-  let usersRef = dbRef.child("invites");
-  // Get Unique Key for New User
-  return new Promise((resolve, reject) => {
-    usersRef
-      .orderByChild("EmailId")
-      .equalTo(this.EmailId)
-      .once("value", snapshot => {
-        let userKey = null;
-        if (snapshot.exists()) {
-          return resolve(0);
-        } else {
-          let newUserkey = usersRef.push().key;
-          let userObject = {};
-          // Construct JSON Object for User
-          userObject["/users/" + newUserkey] = this.toJSON();
-          // Call Update on Object
-          return dbRef.update(userObject, function() {
-            console.log("User Successfully Updated\n"); // Optional callback for success
-            return resolve(1);
-          });
-        }
-      });
-  });
+app.get("/SendInvite", async function(req, res) {
+  let email = req.query.search;
+  let Movie = req.query.Movie;
+  let Location = req.query.Location;
+  let from = req.query.From;
+
+  let user1 = await User.getUserDatabase(email);
+  if (user1) {
+    user1.addInvite(Movie, from, Location);
+    user1.UpdateUserDatabase();
+    res.redirect(__dirname + "/static/Home.html");
+  } else {
+    res.send("User Does not Exist");
+  }
 });
 
 app.post("/Invites", async function(req, res) {
   let emailId = req.body.email;
   let user = await User.getUserDatabase(emailId);
   let invites = await user.getInvites();
-  res.json({Invites: invites});
+  res.json({ Invites: invites });
 });
 
 app.listen(port, function() {

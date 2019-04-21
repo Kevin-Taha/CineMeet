@@ -22,5 +22,4 @@ async function postUser(EmailId, FullName,uid) {
   });
   response = await response.json();
   console.log(response);
-  // window.location.replace(response.redirect);
 }

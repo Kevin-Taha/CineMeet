@@ -25,16 +25,50 @@
       integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
       crossorigin="anonymous"
     ></script>
+    <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-app.js"></script>
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-database.js"></script>
+    <script src="init-firebase.js"></script>
+    <script>
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          console.log("Testing");
+          $(document).ready(function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const myParam = urlParams.get("search");
+            $('input[name="Movie"]').val(myParam);
+            $('input[name="From"]').val(user.email);
+            $("#invite-form").submit(function(eventObj) {
+              eventObj.preventDefault();
+              $("#invite-form").attr("action", "/SendInvite");
+              this.submit();
+            });
+          });
+        } else {
+          // No user is signed in.
+          window.location.replace("/");
+        }
+      });
+    </script>
   </head>
   <body>
     <div class="container-fluid">
-      <form action="/SendInvite">
+      <form id="invite-form">
         <input
           id="search-bar"
           type="text"
           placeholder="Enter Email.."
           name="search"
         />
+        <input
+          id="location"
+          type="text"
+          placeholder="Enter Location"
+          name="Location"
+        />
+        <input type="hidden" value="" name="Movie" />
+        <input type="hidden" value="" name="From" />
         <button class="btn btn-success" id="submit-button" type="submit">
           Send Invite<i class="fa fa-search-plus"></i>
         </button>
