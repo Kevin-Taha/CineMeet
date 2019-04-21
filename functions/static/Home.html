@@ -26,10 +26,22 @@
       crossorigin="anonymous"
     ></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-app.js"></script>
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-database.js"></script>
+    <script src="init-firebase.js"></script>
   </head>
   <script>
-    
-   Cookies.set('emailId','google@google.com', {httpOnly: false});
+          firebase.auth().onAuthStateChanged(function(user) {
+          if (user) {
+            console.log("User Logged IN");
+        } 
+        else {
+          // No user is signed in.
+          window.location.replace("/");
+        }
+    });
   
   </script>
   <body>

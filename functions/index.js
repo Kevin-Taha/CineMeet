@@ -29,31 +29,20 @@ var config = {
   storageBucket: "cinemeet252.appspot.com",
   messagingSenderId: "840336543404"
 };
-
 firebase.initializeApp(config);
+
 // res.cookie('rememberme', 'yes', { httpOnly: false});
 app.get("/", function(req, res) {
   res.sendFile(__dirname + "/static/LoginScreen.html");
 });
 
 app.post("/auth", function(req, res) {
-  let database = firebase.database();
-  let dbRef = database.ref();
+  let name = req.body.fullName;
+  let email = req.body.email;
   console.log(req.body);
-  let name = req.body.uname;
-  let email = req.body.uemail;
-  let desc = req.body.udesc;
-
-  //   ref.on('value', function(snapshot) {
-  //     if (snapshot.exists())
-  //        console.log("exist");
-  //     else
-  //        console.log("not exist");
-  //  });
-
-  user = new User(name, email, desc);
+  console.log("Checking if you work!!!");
+  user = new User(name, email);
   user.PushToUserDatabase();
-
   res.json({ success: true });
 });
 
@@ -66,9 +55,6 @@ app.get("/FindMovie", function(req, res) {
 });
 
 app.get("/Home", function(req, res) {
-  let user = new User("Naruto Uzumaki", "naruto@rasengan.com");
-  console.log(user);
-  user.PushToUserDatabase();
   console.log("Done\n");
   res.sendFile(__dirname + "/static/Home.html");
 });
