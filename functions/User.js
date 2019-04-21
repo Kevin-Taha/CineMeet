@@ -24,21 +24,21 @@ class User {
     return this.EmailId;
   }
 
-  addInvite(movie,email,coordinates){
-    data = {Movie: movie,Email: email, Coordinates: coordinates}
+  addInvite(movie, email, coordinates) {
+    let data = { Movie: movie, Email: email, Coordinates: coordinates };
     this.Invites.push(data);
   }
 
-  deleteInvite(movie,email){
-      for(let i=0;i<this.Invites.length;i++){
-        if(this.Invites[i].Movie === movie && this.Invites[i].Email === email){
-          this.Invites.splice(i,1);
-          i--;
-        }
+  deleteInvite(movie, email) {
+    for (let i = 0; i < this.Invites.length; i++) {
+      if (this.Invites[i].Movie === movie && this.Invites[i].Email === email) {
+        this.Invites.splice(i, 1);
+        i--;
       }
+    }
   }
 
-  deleteAllInvite(){
+  deleteAllInvite() {
     this.Invites = [];
   }
 
@@ -47,7 +47,7 @@ class User {
     this.EmailId = email;
   }
 
-  getInvites(){
+  getInvites() {
     let database = firebase.database();
     let dbRef = database.ref();
     // Get Node with all users
@@ -69,7 +69,6 @@ class User {
         });
     });
   }
-  
 
   getUserID() {
     return this.UserId;

@@ -20,7 +20,7 @@
             // The signed-in user info.
             var user = result.user;
             postUser(user.email,user.displayName,user.uid);
-            
+            window.location.replace("/Home?User="+user.email);
           })
           .catch(function(error) {
             // Handle Errors here.
