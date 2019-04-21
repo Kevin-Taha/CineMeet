@@ -1,0 +1,35 @@
+[debug] [2019-04-21T16:40:56.460Z] ----------------------------------------------------------------------
+[debug] [2019-04-21T16:40:56.464Z] Command:       /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] [2019-04-21T16:40:56.464Z] CLI Version:   6.6.0
+[debug] [2019-04-21T16:40:56.464Z] Platform:      linux
+[debug] [2019-04-21T16:40:56.464Z] Node Version:  v11.1.0
+[debug] [2019-04-21T16:40:56.939Z] Time:          Sun Apr 21 2019 11:40:56 GMT-0500 (GMT-05:00)
+[debug] [2019-04-21T16:40:56.939Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-04-21T16:40:56.951Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-04-21T16:40:56.952Z] > authorizing via signed-in user
+[debug] [2019-04-21T16:40:56.952Z] [iam] checking project cinemeet252 for permissions ["firebase.projects.get"]
+[debug] [2019-04-21T16:40:56.955Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/cinemeet252:testIamPermissions  
+
+[debug] [2019-04-21T16:40:57.178Z] <<< HTTP RESPONSE 200
+[debug] [2019-04-21T16:40:57.185Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/cinemeet252  
+ 
+[debug] [2019-04-21T16:40:57.380Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/mnt/c/Users/kevin/Code/252/CineMeet'...
+[info] 
+[info] i  functions: Preparing to emulate functions.
+[debug] [2019-04-21T16:40:58.129Z] Fetching environment
+[debug] [2019-04-21T16:40:58.135Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/840336543404:getServerAppConfig  
+ 
+[debug] [2019-04-21T16:40:58.136Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/840336543404/clients/_:getWebAppConfig  
+ 
+[debug] [2019-04-21T16:41:03.266Z] <<< HTTP RESPONSE 200
+[debug] [2019-04-21T16:41:03.267Z] Starting @google-cloud/functions-emulator
+[debug] [2019-04-21T16:41:03.330Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] ✔  hosting: Local server: http://localhost:5000
+[debug] [2019-04-21T16:41:04.889Z] Parsing function triggers
+[info] [hosting] Rewriting / to local function app
+[info] [hosting] Rewriting // to local function app
+[info] [hosting] Rewriting / to local function app
