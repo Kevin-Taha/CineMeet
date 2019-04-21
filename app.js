@@ -25,6 +25,32 @@ app.get("/", async function(req, res) {
   res.sendFile(__dirname + "/static/LoginScreen.html");
 });
 
+
+
+app.post('/auth', function(req, res){
+  let database = firebase.database();
+  let dbRef = database.ref();
+
+  let name = req.body.uname;
+  let email = req.body.uemail;
+  let desc = req.body.udesc;
+
+//   ref.on('value', function(snapshot) {
+//     if (snapshot.exists())
+//        console.log("exist");
+//     else
+//        console.log("not exist");
+//  });
+
+
+  user = new User(name, email, desc);
+  user.PushToUserDatabase();
+
+  res.json( { success: true } );
+
+
+});
+
 app.get("/Meet", function(req, res) {
   res.sendFile(__dirname + "/static/Meet.html");
 });
