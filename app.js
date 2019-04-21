@@ -61,7 +61,9 @@ app.get("/FindMovie", function(req, res) {
 
 app.get("/Home", function(req, res) {
   let user = new User("Naruto Uzumaki","naruto@rasengan.com");
+  console.log(user);
   user.PushToUserDatabase();
+  console.log("Done\n");
   res.sendFile(__dirname + "/static/Home.html");
 });
 

@@ -7,7 +7,7 @@ class User {
     this.EmailId = EmailId;
     this.Movies = [];
   }
-  
+
   //Get Full Name of User
   getFullname() {
     return this.FullName;
@@ -49,15 +49,15 @@ class User {
   }
 
   // Adds Movie to List
-  addMovie(movieName){
+  addMovie(movieName) {
     this.Movies.push(movieName);
   }
-  
+
   // Removes Movie from List
-  deleteMovie(movieName){
+  deleteMovie(movieName) {
     let index = this.Movies.indexOf(movieName);
-    if(index > -1){
-      this.Movies = this.Movies.splice(index,1);
+    if (index > -1) {
+      this.Movies = this.Movies.splice(index, 1);
     }
   }
 
@@ -72,32 +72,34 @@ class User {
 
   // New User to Firebase Database
   PushToUserDatabase() {
+    console.log("Pushing to User Database\n");
     let database = firebase.database();
     let dbRef = database.ref();
     // Get Node with all users
     let usersRef = dbRef.child("users");
     // Get Unique Key for New User
-    return new Promise((resolve,reject) => {
-      usersRef.orderByChild("EmailId")
-    .equalTo(this.EmailId)
-    .once("value", (snapshot) => {
-      let userKey = null;
-      if (snapshot.exists()) {
-        return resolve(0);
-      } else {
-        let newUserkey = usersRef.push().key;
-        let userObject = {};
-        // Construct JSON Object for User
-        userObject["/users/" + newUserkey] = this.toJSON();
-        // Call Update on Object
-        return dbRef.update(userObject, function() {
-          console.log("User Successfully Updated\n"); // Optional callback for success
-          return resolve(1);
+    return new Promise((resolve, reject) => {
+      usersRef
+        .orderByChild("EmailId")
+        .equalTo(this.EmailId)
+        .once("value", snapshot => {
+          let userKey = null;
+          if (snapshot.exists()) {
+            return resolve(0);
+          } else {
+            let newUserkey = usersRef.push().key;
+            let userObject = {};
+            // Construct JSON Object for User
+            userObject["/users/" + newUserkey] = this.toJSON();
+            // Call Update on Object
+            return dbRef.update(userObject, function() {
+              console.log("User Successfully Updated\n"); // Optional callback for success
+              console.log("Pushing to User Database Resolving\n");
+              return resolve(1);
+            });
+          }
         });
-      }
     });
-  });
-
   }
 
   // Change User in Firebase Database
@@ -165,15 +167,15 @@ class User {
         .once("value", function(snapshot) {
           // For Each Snapshort Resolve Promise Firebase does not know if there is only entry after search
           snapshot.forEach(function(childSnapshot) {
-			let value = childSnapshot.val();
-			// Create User Object
+            let value = childSnapshot.val();
+            // Create User Object
             let user = new User(
               value.FullName,
               value.EmailId,
               value.Description,
               value.Movies
-			);
-			// Resolve Promise 
+            );
+            // Resolve Promise
             resolve(user);
           });
         });
