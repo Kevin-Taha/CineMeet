@@ -88,12 +88,12 @@
 
       // Create Name entry
       var nameNode = document.createElement("td");
-      var nameText = document.createTextNode("NAME <CHANGE TO VAR> ");
+      var nameText = document.createTextNode(name);
       nameNode.appendChild(nameText);
 
       // Create Movie Entry
       var movieNode = document.createElement("td");
-      var movieText = document.createTextNode("MOVIE < CHANGE TO VAR> ");
+      var movieText = document.createTextNode(movie);
       movieNode.appendChild(movieText);
 
       // <td><a class="link" href="#">Accept</td>
@@ -101,7 +101,7 @@
       var anchorNode = document.createElement("a");
       anchorNode.appendChild(document.createTextNode("Accept"));  
       anchorNode.setAttribute("class", "link");
-      anchorNode.setAttribute("href", "/Meet <CHANGE TO VAR> ")
+      anchorNode.setAttribute("href", param)
       linkNode.appendChild(anchorNode);
 
       // Add entries to table row
@@ -112,17 +112,6 @@
       // Add row to table
       table.appendChild(row); 
     }
-
-
-
-
-
-
-
-
-
-
-
 
   </script>
   <body>
@@ -163,8 +152,8 @@
         </thead>
         <tbody id="table">
           <tr>
-            <td>John</td>
-            <td>Doe</td>
+            <td>Dummy(Remove once it works) </td>
+            <td>Remove </td>
             <td><a class="link" href="#">Accept</td>
           </tr>
 
