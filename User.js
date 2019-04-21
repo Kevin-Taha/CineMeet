@@ -2,10 +2,9 @@ var firebase = require("firebase");
 
 class User {
   // Constructor without image
-  constructor(FullName, EmailId, Description) {
+  constructor(FullName, EmailId) {
     this.FullName = FullName;
     this.EmailId = EmailId;
-    this.Description = Description;
     this.Movies = [];
   }
   
@@ -67,7 +66,6 @@ class User {
     return {
       FullName: this.FullName,
       EmailId: this.EmailId,
-      Description: this.Description,
       Movies: this.Movies
     };
   }
@@ -79,15 +77,27 @@ class User {
     // Get Node with all users
     let usersRef = dbRef.child("users");
     // Get Unique Key for New User
-    let newUserkey = usersRef.push().key;
-
-    let userObject = {};
-    // Construct JSON Object for User
-    userObject["/users/" + newUserkey] = this.toJSON();
-    // Call Update on Object
-    dbRef.update(userObject, function() {
-      console.log("User Successfully Updated\n"); // Optional callback for success
+    return new Promise((resolve,reject) => {
+      usersRef.orderByChild("EmailId")
+    .equalTo(this.EmailId)
+    .once("value", (snapshot) => {
+      let userKey = null;
+      if (snapshot.exists()) {
+        return resolve(0);
+      } else {
+        let newUserkey = usersRef.push().key;
+        let userObject = {};
+        // Construct JSON Object for User
+        userObject["/users/" + newUserkey] = this.toJSON();
+        // Call Update on Object
+        return dbRef.update(userObject, function() {
+          console.log("User Successfully Updated\n"); // Optional callback for success
+          return resolve(1);
+        });
+      }
     });
+  });
+
   }
 
   // Change User in Firebase Database

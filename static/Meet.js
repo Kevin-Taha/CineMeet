@@ -10,6 +10,7 @@ async function getCoordinates(emailId, Movie) {
   });
 
   let responseJSON = await response.json();
+  console.log(responseJSON);
   return responseJSON;
 }
 
@@ -25,5 +26,5 @@ async function postCoordinates(EmailId, Movie, Coordinates) {
   });
   response = await response.json();
   console.log(response);
-  window.location.replace(response.redirect);
+  // window.location.replace(response.redirect);
 }

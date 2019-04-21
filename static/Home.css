@@ -1,0 +1,27 @@
+#invite {
+  padding-top: 5em;
+}
+.nav-item {
+  text-align: center;
+}
+.link {
+  color: white;
+}
+#id {
+  text-align: center;
+}
+.search-container {
+  padding-top: 5em;
+  padding-left: 20em;
+}
+
+#search-bar {
+  width: 30em;
+}
+
+#submit-button {
+  background: #ddd;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+}
