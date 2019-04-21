@@ -52,24 +52,22 @@
       console.log(response);
     }
 
-    firebase.auth().onAuthStateChanged(function(user) {
+    firebase.auth().onAuthStateChanged(async function(user) {
           if (user) {
             console.log("User Logged IN");
             email = user.email;
             invites = getInvites(email);
 
-
-
-
-
-
-
-
-
-
-
-
-
+            invites.forEach(function(invite){
+                
+                var name = invite.Email;
+                var movie = invite.Movie;
+                var param = "/Meet";
+                param += "?lat=" += invite.Coordinates.latitude;
+                param += "&long=" += invite.Coordinates.longitude;
+              addTableEntry(name, movie, param);
+            });
+                
 
         } 
         else {
