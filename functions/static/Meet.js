@@ -28,3 +28,18 @@ async function postCoordinates(EmailId, Movie, Coordinates) {
   console.log(response);
   // window.location.replace(response.redirect);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

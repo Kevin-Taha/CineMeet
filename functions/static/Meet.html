@@ -48,6 +48,21 @@
           mapProp
         );
       }
+
+      var urlParams = new URLSearchParams(window.location.search);
+
+      var loc;
+
+      if (urlParams.has('location')) {
+        loc = urlParams.get('location');
+      }
+      else{
+        alert('Invalid Input, missing location {?location} ');
+      }
+
+
+
+
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=&callback=myMap"></script>
   </body>
