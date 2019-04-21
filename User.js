@@ -73,6 +73,7 @@ class User {
   // New User to Firebase Database
   PushToUserDatabase() {
     console.log("Pushing to User Database\n");
+    console.log(firebase.apps.length);
     let database = firebase.database();
     let dbRef = database.ref();
     // Get Node with all users
