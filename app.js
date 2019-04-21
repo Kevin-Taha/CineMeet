@@ -1,12 +1,14 @@
 var express = require("express");
 var firebase = require("firebase");
 var bodyParser = require("body-parser");
+var cookieParser = require("cookie-parser");
 var url = require("url");
 var User = require("./User.js");
 var port = process.env.PORT || 3000;
 var path = require("path");
 var app = express();
 
+app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "static")));
 app.use(bodyParser.json()); // to support JSON-encoded bodies
 app.use(
@@ -18,19 +20,13 @@ app.use(
 
 const config = JSON.parse(process.env.firebaseConfig);
 firebase.initializeApp(config);
-
+// res.cookie('rememberme', 'yes', { httpOnly: false});
 app.get("/", async function(req, res) {
-  let user = new User("Yatharth", "Rawat");
-  console.log(await user.PushToUserDatabase());
   res.sendFile(__dirname + "/static/LoginScreen.html");
 });
 
 app.get("/Meet", function(req, res) {
   res.sendFile(__dirname + "/static/Meet.html");
-});
-
-app.get("/FindMovieData", function(req, res) {
-  res.send(req.query.search);
 });
 
 app.get("/FindMovie", function(req, res) {
@@ -39,6 +35,35 @@ app.get("/FindMovie", function(req, res) {
 
 app.get("/Home", function(req, res) {
   res.sendFile(__dirname + "/static/Home.html");
+});
+
+app.get("/SendInvite", function(req, res) {
+  let database = firebase.database();
+  let dbRef = database.ref();
+  // Get Node with all users
+  let usersRef = dbRef.child("invites");
+  // Get Unique Key for New User
+  return new Promise((resolve, reject) => {
+    usersRef
+      .orderByChild("EmailId")
+      .equalTo(this.EmailId)
+      .once("value", snapshot => {
+        let userKey = null;
+        if (snapshot.exists()) {
+          return resolve(0);
+        } else {
+          let newUserkey = usersRef.push().key;
+          let userObject = {};
+          // Construct JSON Object for User
+          userObject["/users/" + newUserkey] = this.toJSON();
+          // Call Update on Object
+          return dbRef.update(userObject, function() {
+            console.log("User Successfully Updated\n"); // Optional callback for success
+            return resolve(1);
+          });
+        }
+      });
+  });
 });
 
 app.post("/Invite", function(req, res) {
