@@ -39,9 +39,10 @@ app.get("/", function(req, res) {
 app.post("/auth", function(req, res) {
   let name = req.body.fullName;
   let email = req.body.email;
+  let uid = req.body.userId
   console.log(req.body);
   console.log("Checking if you work!!!");
-  user = new User(name, email);
+  user = new User(name, email,uid);
   user.PushToUserDatabase();
   res.json({ success: true });
 });

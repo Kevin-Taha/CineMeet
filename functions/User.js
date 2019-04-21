@@ -24,6 +24,24 @@ class User {
     return this.EmailId;
   }
 
+  addInvite(movie,email,coordinates){
+    data = {Movie: movie,Email: email, Coordinates: coordinates}
+    this.Invites.push(data);
+  }
+
+  deleteInvite(movie,email){
+      for(let i=0;i<this.Invites.length;i++){
+        if(this.Invites[i].Movie === movie && this.Invites[i].Email === email){
+          this.Invites.splice(i,1);
+          i--;
+        }
+      }
+  }
+
+  deleteAllInvite(){
+    this.Invites = [];
+  }
+
   // Set Email ID of User
   setEmailId(email) {
     this.EmailId = email;
@@ -62,7 +80,8 @@ class User {
     return {
       FullName: this.FullName,
       EmailId: this.EmailId,
-      UserId: this.UserId
+      UserId: this.UserId,
+      Invites: this.Invites
     };
   }
 
@@ -141,7 +160,8 @@ class User {
             let user = new User(
               value.FullName,
               value.EmailId,
-              value.UserId
+              value.UserId,
+              value.Invites
             );
             // Resolve Promise
             resolve(user);

@@ -19,7 +19,7 @@
             }
             // The signed-in user info.
             var user = result.user;
-            postUser(user.email,user.displayName);
+            postUser(user.email,user.displayName,user.uid);
             
           })
           .catch(function(error) {

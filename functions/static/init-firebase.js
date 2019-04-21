@@ -10,8 +10,8 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-async function postUser(EmailId, FullName) {
-  let data = { email: EmailId, fullName: FullName }; // Parameters being sent to server for coordinates
+async function postUser(EmailId, FullName,uid) {
+  let data = { email: EmailId, fullName: FullName, userId: uid }; // Parameters being sent to server for coordinates
 
   let response = await fetch("/auth", {
     method: "POST", // Since we are sending some data to the server
