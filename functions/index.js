@@ -39,17 +39,23 @@ app.post("/auth", function(req, res) {
   let email = req.body.email;
   let uid = req.body.userId;
   console.log(req.body);
-  // user = new User(name, email, uid);
-  // user.addInvite("DragonBall", "rawat.yatharth@gmail.com", {
-  //   latitude: 355,
-  //   longitude: 5454
-  // });
-  // user.addInvite("DragonBall1", "rawat.yatharth@gmail.com1", {
-  //   latitude: 355,
-  //   longitude: 54541
-  // });
-  // user.PushToUserDatabase();
+  user = new User(name, email, uid);
+  user.PushToUserDatabase();
   res.json({ success: true });
+});
+
+app.get("/deleteInvite", async function(req, res) {
+  let email = req.query.email;
+  let movie = req.query.movie;
+  let fromEmail = req.query.Fromemail
+  console.log("Parameters in get request "+req.query);
+  let user1 = await User.getUserDatabase(email);
+  if (user1) {
+    user1.deleteInvite(movie,fromEmail);
+    res.redirect("/Home");
+  } else {
+    res.send("User Does not Exist");
+  }
 });
 
 app.get("/Meet", function(req, res) {
@@ -82,9 +88,7 @@ app.get("/SendInvite", async function(req, res) {
 app.post("/Invites", async function(req, res) {
   let emailId = req.body.email;
   let user = await User.getUserDatabase(emailId);
-  console.log(user);
   let invites = await user.getInvites();
-  console.log(invites);
   res.json({ Invites: invites });
 });
 

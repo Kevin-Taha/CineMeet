@@ -53,25 +53,30 @@
     </script>
   </head>
   <body>
+    <br /><br />
     <div class="container-fluid">
       <form id="invite-form">
-        <input
-          id="search-bar"
-          type="text"
-          placeholder="Enter Email.."
-          name="search"
-        />
-        <input
-          id="location"
-          type="text"
-          placeholder="Enter Location"
-          name="Location"
-        />
-        <input type="hidden" value="" name="Movie" />
-        <input type="hidden" value="" name="From" />
-        <button class="btn btn-success" id="submit-button" type="submit">
-          Send Invite<i class="fa fa-search-plus"></i>
-        </button>
+        <div class="input-group">
+          <div class="col-5">
+            <input
+              id="search-bar"
+              type="text"
+              class="form-group"
+              placeholder="Enter Email.."
+              name="search"
+            />
+            <input
+              id="location"
+              type="text"
+              class="form-group"
+              placeholder="Enter Location"
+              name="Location"
+            />
+            <button class="btn btn-success" id="submit-button" type="submit">Send Invite</button>
+            <input class="form-group"type="hidden" value="" name="Movie" />
+            <input class="form-group"type="hidden" value="" name="From" />
+          </div>
+        </div>
       </form>
     </div>
   </body>

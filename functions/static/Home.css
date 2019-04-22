@@ -10,18 +10,11 @@
 #id {
   text-align: center;
 }
-.search-container {
-  padding-top: 5em;
-  padding-left: 20em;
+#search-container {
+  margin-top: 5em;
+  margin-left: 20em;
+  margin-right: 20em;
 }
-
-#search-bar {
-  width: 30em;
-}
-
-#submit-button {
-  background: #ddd;
-  font-size: 17px;
-  border: none;
-  cursor: pointer;
+.margin {
+  padding-top: 10%;
 }

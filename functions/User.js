@@ -25,19 +25,17 @@ class User {
   }
 
   addInvite(movie, email, location) {
-    // let data = { Movie: movie, Email: email, Location: location };
-    // console.log(data);
-    // this.Invites.push(data);
-    // console.log(this.Invites.toString());
     let database = firebase.database();
     let dbRef = database.ref();
     // Get Node with all users
     let invitesRef = dbRef.child("users/" + this.UserId + "/Invites");
     let inviteKey = invitesRef.push().getKey();
     let inviteData = { Movie: movie, Email: email, Location: location };
-    let inviteObject={}
+    let inviteObject = {};
     // Construct JSON Object for User
-    inviteObject["/users/" + this.UserId + "/Invites/" + inviteKey] = inviteData;
+    inviteObject[
+      "/users/" + this.UserId + "/Invites/" + inviteKey
+    ] = inviteData;
     // Call Update on Object
     dbRef.update(inviteObject, function() {
       console.log("User Successfully Updated\n"); // Optional callback for success
@@ -45,12 +43,40 @@ class User {
   }
 
   deleteInvite(movie, email) {
-    for (let i = 0; i < this.Invites.length; i++) {
-      if (this.Invites[i].Movie === movie && this.Invites[i].Email === email) {
-        this.Invites.splice(i, 1);
-        i--;
-      }
-    }
+    let database = firebase.database();
+    let dbRef = database.ref();
+    // Get Node with all users
+    let usersRef = dbRef.child("users");
+    // Returns Promise
+    // Order List by EmailId and search for email id of user
+    usersRef
+      .orderByChild("EmailId")
+      .equalTo(this.EmailId)
+      .once("value", snapshot => {
+        // For Each Snapshort Resolve Promise Firebase does not know if there is only entry after search
+        snapshot.forEach(childSnapshot => {
+          let value = childSnapshot.val();
+          let key = Object.keys(value)[0];
+          // Create User Object
+          // Resolve Promise
+          let invites = value.Invites;
+          let keylist = Object.keys(value.Invites);
+          let bodyList = Object.values(value.Invites);
+          for (let k = 0; k < keylist.length; k++) {
+            if (bodyList[k].Movie === movie && bodyList[k].Email === email) {
+              value.Invites[keylist[k]] = null;
+            }
+          }
+          console.log("Hello from deleteInvite " + value);
+          let userObject = {};
+          // Construct JSON Object for User
+          userObject["/users/" + this.UserId] = value;
+          // Call Update on Object
+          dbRef.update(userObject, function() {
+            console.log("Invite Deleted\n"); // Optional callback for success
+          });
+        });
+      });
   }
 
   deleteAllInvite() {
@@ -63,7 +89,6 @@ class User {
   }
 
   getInvites(emailId = this.EmailId) {
-    console.log("from get invites: " + emailId);
     let database = firebase.database();
     let dbRef = database.ref();
     // Get Node with all users
@@ -71,7 +96,6 @@ class User {
     // Returns Promise
     return new Promise(function(resolve, reject) {
       // Order List by EmailId and search for email id of user
-      console.log("from get invites2: " + emailId);
       usersRef
         .orderByChild("EmailId")
         .equalTo(emailId)

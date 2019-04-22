@@ -33,11 +33,11 @@
     <script src="init-firebase.js"></script>
   </head>
   <script>
-    function signOut(){
+    function signOut() {
       firebase.auth().signOut();
     }
 
-    async function getInvites( EmailId ) {
+    async function getInvites(EmailId) {
       let data = { email: EmailId }; // Parameters being sent to server for coordinates
 
       let response = await fetch("/Invites", {
@@ -51,40 +51,44 @@
       response = await response.json();
       console.log(response);
       return response;
-
     }
 
     firebase.auth().onAuthStateChanged(async function(user) {
-          if (user) {
-            console.log("User Logged IN");
-            email = user.email;
-            invites = await getInvites(email);
-            console.log(invites);
-            invites = invites["Invites"];
-            invites = Object.values(invites);
+      if (user) {
+        console.log("User Logged IN");
+        email = user.email;
+        invites = await getInvites(email);
+        console.log(invites);
+        invites = invites["Invites"];
+        invites = Object.values(invites);
 
-            invites.forEach(function(invite){
-                console.log(invite);
-                var name = invite.Email;
-                var movie = invite.Movie;
-                var param = "/Meet";
-                param += "?location=" + invite.Location;
-              addTableEntry(name, movie, param);
-            });
-                
-        } 
-        else {
-          // No user is signed in.
-          window.location.replace("/");
-        }
+        invites.forEach(function(invite) {
+          console.log(invite);
+          var name = invite.Email;
+          var movie = invite.Movie;
+          var param = "/Meet";
+          var param2 = "/deleteInvite";
+          param2 =
+            param2 +
+            "?email=" +
+            user.email +
+            "&movie=" +
+            movie +
+            "&Fromemail=" +
+            name;
+          param += "?location=" + invite.Location;
+
+          addTableEntry(name, movie, param, param2);
+        });
+      } else {
+        // No user is signed in.
+        window.location.replace("/");
+      }
     });
-  
 
-
-    function addTableEntry(name, movie, param){
-
+    function addTableEntry(name, movie, param, param2) {
       // Get parent id id
-      var table = document.getElementById("table")
+      var table = document.getElementById("table");
 
       // Create Row entry
       var row = document.createElement("tr");
@@ -102,44 +106,53 @@
       // <td><a class="link" href="#">Accept</td>
       var linkNode = document.createElement("td");
       var anchorNode = document.createElement("a");
-      anchorNode.appendChild(document.createTextNode("Accept"));  
+      anchorNode.appendChild(document.createTextNode("Accept"));
       anchorNode.setAttribute("class", "link");
-      anchorNode.setAttribute("href", param)
+      anchorNode.setAttribute("href", param);
       linkNode.appendChild(anchorNode);
+
+      var linkNode1 = document.createElement("td");
+      var anchorNode1 = document.createElement("a");
+      anchorNode1.appendChild(document.createTextNode("Delete"));
+      anchorNode1.setAttribute("class", "link");
+      anchorNode1.setAttribute("href", param2);
+      linkNode1.appendChild(anchorNode1);
 
       // Add entries to table row
       row.appendChild(nameNode);
       row.appendChild(movieNode);
       row.appendChild(linkNode);
+      row.appendChild(linkNode1);
 
       // Add row to table
-      table.appendChild(row); 
+      table.appendChild(row);
     }
-
   </script>
   <body>
     <div class="container-fluid">
-    <nav class="navbar navbar bg-dark navbar-dark fixed-top">
-      <!-- Brand -->
-      <a class="navbar-brand" href="#">CineMeet</a>
-      <!-- Toggler/collapsibe Button -->
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#collapsibleNavbar"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <!-- Navbar links -->
-      <div class="collapse navbar-collapse" id="collapsibleNavbar">
-        <ul id="navigation" class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="javascript:signOut()">Logout</a>
-          </li>
-        </ul>
-      </div>
-    </nav>
+      <nav class="navbar navbar bg-dark navbar-dark fixed-top">
+        <!-- Brand -->
+        <a class="navbar-brand" href="#">CineMeet</a>
+        <!-- Toggler/collapsibe Button -->
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#collapsibleNavbar"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- Navbar links -->
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+          <ul id="navigation" class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="javascript:signOut()">Logout</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+
     <div id="invite" class="container-fluid">
       <h2>Invites</h2>
       <table class="table table-dark table-hover">
@@ -151,24 +164,32 @@
           </tr>
         </thead>
         <tbody id="table">
-          <tr>
-            <td>Dummy(Remove once it works) </td>
-            <td>Remove </td>
-            <td><a class="link" href="#">Accept</td>
-          </tr>
-
-
-
-
+          <!-- Filled with javascript -->
         </tbody>
       </table>
     </div>
-  </div>
-
-  <div class="search-container">
+    <div class="margin"></div>
+    <div class="container-fluid">
       <form action="/FindMovie">
-        <input id="search-bar" type="text" placeholder="Search Movie.." name="search">
-        <button id="submit-button" type="submit">Find Movie<i class="fa fa-search-plus"></i></button>
+        <div class="input-group">
+          <div class="col-5">
+            <input
+              id="search-bar"
+              class="form-control"
+              type="text"
+              placeholder="Search Movie.."
+              name="search"
+            />
+          </div>
+
+          <button
+            id="submit-button"
+            class="btn btn-primary center-block"
+            type="submit"
+          >
+            Find Movie
+          </button>
+        </div>
       </form>
     </div>
   </body>
