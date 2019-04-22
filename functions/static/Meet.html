@@ -37,20 +37,10 @@
     </div>
 
     <script>
-      
-      function myMap() {
-        var mapProp = {
-          center: new google.maps.LatLng(51.508742, -0.12085),
-          zoom: 5
-        };
-        var map = new google.maps.Map(
-          document.getElementById("googleMap"),
-          mapProp
-        );
-      }
+      // postCoordinates("Goku", "Dragonball", { latitude: 2, longitude: 2 });
+      // postCoordinates("Yatharth", "Dragonball", { latitude: 1, longitude: 2 });
 
       var urlParams = new URLSearchParams(window.location.search);
-
       var loc;
 
       if (urlParams.has('location')) {
@@ -59,6 +49,37 @@
       else{
         alert('Invalid Input, missing location {?location} ');
       }
+
+      getCoordinates("Yatharth", "Dragonball");
+      function myMap() {
+        var mapProp = {
+          center: new google.maps.LatLng(40.43, -86.91),
+          zoom: 5
+        };
+        var map = new google.maps.Map(
+          document.getElementById("googleMap"),
+          mapProp
+        );
+
+        var request = {
+      location: map.getCenter(),
+      radius: '500',
+      query: 'Google Sydney'
+     };
+
+
+      }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
