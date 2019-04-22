@@ -73,8 +73,7 @@ app.get("/SendInvite", async function(req, res) {
   let user1 = await User.getUserDatabase(email);
   if (user1) {
     user1.addInvite(Movie, from, Location);
-    user1.UpdateUserDatabase();
-    res.redirect(__dirname + "/static/Home.html");
+    res.redirect("/Home");
   } else {
     res.send("User Does not Exist");
   }
@@ -83,7 +82,9 @@ app.get("/SendInvite", async function(req, res) {
 app.post("/Invites", async function(req, res) {
   let emailId = req.body.email;
   let user = await User.getUserDatabase(emailId);
+  console.log(user);
   let invites = await user.getInvites();
+  console.log(invites);
   res.json({ Invites: invites });
 });
 

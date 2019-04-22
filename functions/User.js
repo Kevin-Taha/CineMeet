@@ -25,8 +25,23 @@ class User {
   }
 
   addInvite(movie, email, location) {
-    let data = { Movie: movie, Email: email, Location: location };
-    this.Invites.push(data);
+    // let data = { Movie: movie, Email: email, Location: location };
+    // console.log(data);
+    // this.Invites.push(data);
+    // console.log(this.Invites.toString());
+    let database = firebase.database();
+    let dbRef = database.ref();
+    // Get Node with all users
+    let invitesRef = dbRef.child("users/" + this.UserId + "/Invites");
+    let inviteKey = invitesRef.push().getKey();
+    let inviteData = { Movie: movie, Email: email, Location: location };
+    let inviteObject={}
+    // Construct JSON Object for User
+    inviteObject["/users/" + this.UserId + "/Invites/" + inviteKey] = inviteData;
+    // Call Update on Object
+    dbRef.update(inviteObject, function() {
+      console.log("User Successfully Updated\n"); // Optional callback for success
+    });
   }
 
   deleteInvite(movie, email) {
@@ -47,7 +62,8 @@ class User {
     this.EmailId = email;
   }
 
-  getInvites() {
+  getInvites(emailId = this.EmailId) {
+    console.log("from get invites: " + emailId);
     let database = firebase.database();
     let dbRef = database.ref();
     // Get Node with all users
@@ -55,6 +71,7 @@ class User {
     // Returns Promise
     return new Promise(function(resolve, reject) {
       // Order List by EmailId and search for email id of user
+      console.log("from get invites2: " + emailId);
       usersRef
         .orderByChild("EmailId")
         .equalTo(emailId)
@@ -94,7 +111,7 @@ class User {
     let usersRef = dbRef.child("users");
     // Get Unique Key for New User
     let newUserkey = this.UserId;
-    console.log("From PushToUserDatabase \n"+this.toJSON());
+    console.log("From PushToUserDatabase \n" + this.toJSON());
     let userObject = {};
     // Construct JSON Object for User
     userObject["/users/" + newUserkey] = this.toJSON();
@@ -153,8 +170,7 @@ class User {
         .orderByChild("EmailId")
         .equalTo(emailId)
         .once("value", function(snapshot) {
-
-          if(snapshot.exists()){
+          if (snapshot.exists()) {
             snapshot.forEach(function(childSnapshot) {
               let value = childSnapshot.val();
               // Create User Object
@@ -167,11 +183,9 @@ class User {
               // Resolve Promise
               resolve(user);
             });
-          }
-          else{
+          } else {
             resolve(null);
           }
-
         });
     });
   }

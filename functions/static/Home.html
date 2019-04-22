@@ -47,23 +47,28 @@
         },
         body: JSON.stringify(data)
       });
-      response = await response.json();
-      return response;
       console.log(response);
+      response = await response.json();
+      console.log(response);
+      return response;
+
     }
 
     firebase.auth().onAuthStateChanged(async function(user) {
           if (user) {
             console.log("User Logged IN");
             email = user.email;
-            invites = getInvites(email);
+            invites = await getInvites(email);
+            console.log(invites);
+            invites = invites["Invites"];
+            invites = Object.values(invites);
 
             invites.forEach(function(invite){
-                
+                console.log(invite);
                 var name = invite.Email;
                 var movie = invite.Movie;
                 var param = "/Meet";
-                param += "?location=" += invite.Location;
+                param += "?location=" + invite.Location;
               addTableEntry(name, movie, param);
             });
                 
