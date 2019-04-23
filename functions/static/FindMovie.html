@@ -30,6 +30,7 @@
     <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-database.js"></script>
     <script src="init-firebase.js"></script>
+    <script src="FindMovie.js"></script>
     <script>
       firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
@@ -53,7 +54,15 @@
     </script>
   </head>
   <body>
+    <div class="container-fluid">
+      
+    </div>
     <br /><br />
+    <script>
+      const urlParams = new URLSearchParams(window.location.search);
+      const movie = urlParams.get("search");
+      getMovie(movie);
+    </script>
     <div class="container-fluid">
       <form id="invite-form">
         <div class="input-group">
