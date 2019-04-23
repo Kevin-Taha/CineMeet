@@ -79,7 +79,7 @@
             name;
           param += "?location=" + invite.Location;
 
-          addTableEntry(name, movie, param, param2,message);
+          addTableEntry(name, movie, param, param2, message);
         });
       } else {
         // No user is signed in.
@@ -87,7 +87,7 @@
       }
     });
 
-    function addTableEntry(name, movie, param, param2,message) {
+    function addTableEntry(name, movie, param, param2, message) {
       // Get parent id id
       var table = document.getElementById("table");
 
@@ -141,6 +141,22 @@
         <!-- Brand -->
         <a class="navbar-brand" href="#">CineMeet</a>
         <!-- Toggler/collapsibe Button -->
+        <form class="navbar-form navbar-left" action="/FindMovie">
+          <div class="form-group input-group">
+            <input
+              id="search-bar"
+              class="form-control"
+              type="text"
+              placeholder="Search Movie.."
+              name="search"
+            />
+            <span class="input-group-addon">
+              <button id="submit-button" class="btn btn-primary" type="submit">
+                Find Movie
+              </button>
+            </span>
+          </div>
+        </form>
         <button
           class="navbar-toggler"
           type="button"
@@ -177,7 +193,7 @@
     </div>
     <div class="margin"></div>
     <div class="container-fluid">
-      <form action="/FindMovie">
+      <!-- <form action="/FindMovie">
         <div class="input-group">
           <div class="col-5">
             <input
@@ -197,7 +213,7 @@
             Find Movie
           </button>
         </div>
-      </form>
+      </form> -->
     </div>
   </body>
 </html>
