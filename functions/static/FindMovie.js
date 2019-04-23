@@ -18,6 +18,7 @@ async function displayMovie(MovieName, Year = null) {
   }
 
   let movieData = await movieResponse.json();
+  console.log(movieData);
   if (movieResponse.ok && movieData["Response"] === "True") {
     // Movie found
     /*
@@ -58,6 +59,89 @@ async function displayMovie(MovieName, Year = null) {
     movie.appendChild(result);
   }
   currentMovieJSON = movieData;
+  displayMovieTable(movieData);
+}
+
+function displayMovieTable(movieData) {
+  let table = document.getElementById("movie-info-table");
+
+  // Create IMDB rating row
+  let imdbRow = document.getElementById("movie-info-imdb-rating");
+  let imdbHdr = document.createElement("th");
+  let imdbHdrText = document.createTextNode("IMDB Rating");
+  let imdbNode = document.createElement("td");
+  let imdbText = document.createTextNode(movieData["imdbRating"]);
+  imdbHdr.appendChild(imdbHdrText);
+  imdbNode.appendChild(imdbText);
+  imdbRow.appendChild(imdbHdr);
+  imdbRow.appendChild(imdbNode);
+
+  // Create director row
+  let dirRow = document.getElementById("movie-info-director");
+  let dirHdr = document.createElement("th");
+  let dirHdrText = document.createTextNode("Director");
+  let dirNode = document.createElement("td");
+  let dirText = document.createTextNode(movieData["Director"]);
+  dirHdr.appendChild(dirHdrText);
+  dirNode.appendChild(dirText);
+  dirRow.appendChild(dirHdr);
+  dirRow.appendChild(dirNode);
+
+  // Create plot row
+  let plotRow = document.getElementById("movie-info-plot");
+  let plotHdr = document.createElement("th");
+  let plotHdrText = document.createTextNode("Plot Summary");
+  let plotNode = document.createElement("td");
+  let plotText = document.createTextNode(movieData["Plot"]);
+  plotHdr.appendChild(plotHdrText);
+  plotNode.appendChild(plotText);
+  plotRow.appendChild(plotHdr);
+  plotRow.appendChild(plotNode);
+
+  // Create genre row
+  let genreRow = document.getElementById("movie-info-genre");
+  let genreHdr = document.createElement("th");
+  let genreHdrText = document.createTextNode("Genres");
+  let genreNode = document.createElement("td");
+  let genreText = document.createTextNode(movieData["Genre"]);
+  genreHdr.appendChild(genreHdrText);
+  genreNode.appendChild(genreText);
+  genreRow.appendChild(genreHdr);
+  genreRow.appendChild(genreNode);
+
+  // Create release date row
+  let releaseRow = document.getElementById("movie-info-release");
+  let releaseHdr = document.createElement("th");
+  let releaseHdrText = document.createTextNode("Release Date");
+  let releaseNode = document.createElement("td");
+  let releaseText = document.createTextNode(movieData["Release"]);
+  releaseHdr.appendChild(releaseHdrText);
+  releaseNode.appendChild(releaseText);
+  releaseRow.appendChild(releaseHdr);
+  releaseRow.appendChild(releaseNode);
+
+  // Create Rating row
+  let ratedRow = document.getElementById("movie-info-rated");
+  let ratedHdr = document.createElement("th");
+  let ratedHdrText = document.createTextNode("Rated");
+  let ratedNode = document.createElement("td");
+  let ratedText = document.createTextNode(movieData["Rated"]);
+  ratedHdr.appendChild(ratedHdrText);
+  ratedNode.appendChild(ratedText);
+  ratedRow.appendChild(ratedHdr);
+  ratedRow.appendChild(ratedNode);
+
+  // Create runtime row
+  let runtimeRow = document.getElementById("movie-info-runtime");
+  let runtimeHdr = document.createElement("th");
+  let runtimeHdrText = document.createTextNode("Runtime");
+  let runtimeNode = document.createElement("td");
+  let runtimeText = document.createTextNode(movieData["Runtime"]);
+  runtimeHdr.appendChild(runtimeHdrText);
+  runtimeNode.appendChild(runtimeText);
+  runtimeRow.appendChild(runtimeHdr);
+  runtimeRow.appendChild(runtimeNode);
+
 }
 
 async function showMoreMovies() {
@@ -117,6 +201,47 @@ function updateMovie(MovieName, Year) {
   if (window.history.replaceState) {
     //prevents browser from storing history with each change:
     window.history.replaceState(window.history.state, "", `/FindMovie/?search=${MovieName}`);
+  }
+  
+  // Erase all data from the previous movie
+  let movieList = document.getElementById("movie-info-list");
+  while (movieList.firstChild) {
+    movieList.removeChild(movieList.firstChild);
+  }
+
+  let imdbRow = document.getElementById("movie-info-imdb-rating");
+  while (imdbRow.firstChild) {
+    imdbRow.removeChild(imdbRow.firstChild);
+  }
+
+  let dirRow = document.getElementById("movie-info-director");
+  while (dirRow.firstChild) {
+    dirRow.removeChild(dirRow.firstChild);
+  }
+
+  let plotRow = document.getElementById("movie-info-plot");
+  while (plotRow.firstChild) {
+    plotRow.removeChild(plotRow.firstChild);
+  }
+
+  let genreRow = document.getElementById("movie-info-genre");
+  while (genreRow.firstChild) {
+    genreRow.removeChild(genreRow.firstChild);
+  }
+
+  let releaseRow = document.getElementById("movie-info-release");
+  while (releaseRow.firstChild) {
+    releaseRow.removeChild(releaseRow.firstChild);
+  }
+
+  let ratedRow = document.getElementById("movie-info-rated");
+  while (ratedRow.firstChild) {
+    ratedRow.removeChild(ratedRow.firstChild);
+  }
+
+  let runtimeRow = document.getElementById("movie-info-runtime");
+  while (runtimeRow.firstChild) {
+    runtimeRow.removeChild(runtimeRow.firstChild);
   }
 
   displayMovie(MovieName, Year);
