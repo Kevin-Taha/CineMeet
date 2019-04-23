@@ -69,7 +69,7 @@ async function showMoreMovies() {
     // TODO: Don't keep sending queries if no more results to show
 
     let omdbKey = "46fcc81f";
-    let omdbURL = `http://www.omdbapi.com/?s=${movieName}&type=movie&page=${page}`;
+    let omdbURL = `https://www.omdbapi.com/?s=${movieName}&type=movie&page=${page}`;
     omdbURL += `&apikey=${omdbKey}`;
     let movies = await fetch(omdbURL);
     if (movies.ok) {
