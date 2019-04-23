@@ -10,7 +10,7 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-function postUser(EmailId, FullName,uid) {
+function postUser(EmailId, FullName, uid) {
   let data = { email: EmailId, fullName: FullName, userId: uid }; // Parameters being sent to server for coordinates
 
   let response = fetch("/auth", {
@@ -20,4 +20,5 @@ function postUser(EmailId, FullName,uid) {
     },
     body: JSON.stringify(data)
   });
+
 }

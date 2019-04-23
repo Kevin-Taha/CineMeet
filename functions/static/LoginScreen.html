@@ -8,6 +8,9 @@
     <script src="init-firebase.js"></script>
     <title>Login</title>
     <script>
+
+      console.log("Hello World");
+
       firebase
         .auth()
         .getRedirectResult()
@@ -20,6 +23,7 @@
           // The signed-in user info.
           var user = result.user;
           if (result.additionalUserInfo.isNewUser) {
+            console.log("New User");
             postUser(user.email, user.displayName, user.uid);
           }
           window.location.replace("/Home?User=" + user.email);
@@ -99,7 +103,6 @@
     <link rel="stylesheet" type="text/css" href="css/main.css" />
     <!--===============================================================================================-->
 
-    <!-- <script src="https://apis.google.com/js/platform.js" async defer></script> -->
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
       integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -118,7 +121,7 @@
     <!-- <meta name="google-signin-client_id" content="840336543404-o98ap0pjoaiosui3rujoroaujtm7u7rh.apps.googleusercontent.com"> -->
   </head>
   <body>
-    <button onclick="googleSignin(); return false">Google</button>
+    <button onclick="googleSignin(); return false;">Google</button>
     <div class="limiter">
       <div
         class="container-login100"
