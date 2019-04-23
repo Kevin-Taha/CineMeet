@@ -99,7 +99,7 @@ async function showMoreMovies() {
       let link = document.createElement("a");
       link.setAttribute(
         "onclick",
-        `displayMovie(\'${movieData["Title"]}\', \'${movieData["Year"]}\')`
+        `updateMovie(\'${movieData["Title"]}\', \'${movieData["Year"]}\')`
       );
       link.innerText = `${movieData["Title"]} (${movieData["Year"]})`;
       elem.appendChild(link);
@@ -110,6 +110,16 @@ async function showMoreMovies() {
   }
 
   page++;
+}
+
+function updateMovie(MovieName, Year) {
+  // Change search parameters when link is clicked (no refresh)
+  if (window.history.replaceState) {
+    //prevents browser from storing history with each change:
+    window.history.replaceState(window.history.state, "", `/FindMovie/?search=${MovieName}`);
+  }
+
+  displayMovie(MovieName, Year);
 }
 
 function searchAgain() {
