@@ -1,6 +1,7 @@
 var page = 1;
+var currentMovieJSON;
 
-async function displayMovie(MovieName, Year) {
+async function displayMovie(MovieName, Year = null) {
     // Get single movie result from OMDB API
     let omdbKey = "46fcc81f";
     let omdbURL = `http://www.omdbapi.com/?t=${MovieName}&type=movie`;
@@ -11,18 +12,25 @@ async function displayMovie(MovieName, Year) {
     let movieData = await fetch(omdbURL);
 
     let movie = document.getElementById("movie-info");
+     // Erase previous contents (if applicable)
+    while (movie.firstChild) {
+        movie.removeChild(movie.firstChild);
+    }
+
     if (movieData.ok) {
         movieData = await movieData.json();
         // Movie found
         /*
             <div id="movie-info">
-                <img src=${movie poster url} alt="Poster for ${movie title}">
+                <img src=${movie poster url} alt="Movie Poster">
                 <p>${movie title} (${movie year}, Rated {movie age rating}, ${movie duration})</p>
             </div>
         */
+        
+        // Update with new movie
         let poster = document.createElement("img");
         poster.setAttribute("src", movieData["Poster"]);
-        poster.setAttribute("alt", `Poster for ${movieData["Title"]}`);
+        poster.setAttribute("alt", `Movie Poster`);
         movie.appendChild(poster);
 
         let caption = document.createElement("p");
@@ -43,6 +51,7 @@ async function displayMovie(MovieName, Year) {
        result.appendChild(resultText);
        movie.appendChild(result);
     }
+    currentMovieJSON = movieData;
 }
 
 async function showMoreMovies() {
@@ -67,20 +76,26 @@ async function showMoreMovies() {
         movies = await movies.json();
         // Array of movies with title, year, type, poster, imdbID
         movies = movies["Search"]; // Array of movies
-        // Add search results to list
+        
         /*
             <ul id="movie-info-list">
                 ...
-                <li>${movie title} (${movie year})</li>
+                <li>
+                    <a onclick="displayMovie(${movie title}, ${movie year})">${movie title} (${movie year})</a>
+                </li>
                 ...
             </ul>
         */
-        for (let i = 0; movies !== undefined && i < movies.length; i++) {
+       // Add search results to list
+       // i = 0 is current movie (don't show)
+        for (let i = 1; movies !== undefined && i < movies.length; i++) {
             
             let movieData = movies[i];
-            console.log(movieData);
             let elem = document.createElement("li");
-            elem.appendChild(document.createTextNode(`${movieData["Title"]} (${movieData["Year"]})`));
+            let link = document.createElement("a");
+            link.setAttribute("onclick", `displayMovie(\'${movieData["Title"]}\', \'${movieData["Year"]}\')`);
+            link.innerText = `${movieData["Title"]} (${movieData["Year"]})`;
+            elem.appendChild(link);
             movieList.appendChild(elem);
         }
     }
