@@ -38,6 +38,7 @@ app.post("/auth", function(req, res) {
   let name = req.body.fullName;
   let email = req.body.email;
   let uid = req.body.userId;
+  console.log("GNU Debugger Started");
   console.log(req.body);
   user = new User(name, email, uid);
   user.PushToUserDatabase();
@@ -47,11 +48,11 @@ app.post("/auth", function(req, res) {
 app.get("/deleteInvite", async function(req, res) {
   let email = req.query.email;
   let movie = req.query.movie;
-  let fromEmail = req.query.Fromemail
-  console.log("Parameters in get request "+req.query);
+  let fromEmail = req.query.Fromemail;
+  console.log("Parameters in get request " + req.query);
   let user1 = await User.getUserDatabase(email);
   if (user1) {
-    user1.deleteInvite(movie,fromEmail);
+    user1.deleteInvite(movie, fromEmail);
     res.redirect("/Home");
   } else {
     res.send("User Does not Exist");
@@ -75,10 +76,12 @@ app.get("/SendInvite", async function(req, res) {
   let Movie = req.query.Movie;
   let Location = req.query.Location;
   let from = req.query.From;
+  let message = req.query.message;
+  console.log(message);
 
   let user1 = await User.getUserDatabase(email);
   if (user1) {
-    user1.addInvite(Movie, from, Location);
+    user1.addInvite(Movie, from, Location, message);
     res.redirect("/Home");
   } else {
     res.send("User Does not Exist");

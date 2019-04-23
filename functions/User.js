@@ -24,13 +24,13 @@ class User {
     return this.EmailId;
   }
 
-  addInvite(movie, email, location) {
+  addInvite(movie, email, location,message) {
     let database = firebase.database();
     let dbRef = database.ref();
     // Get Node with all users
     let invitesRef = dbRef.child("users/" + this.UserId + "/Invites");
     let inviteKey = invitesRef.push().getKey();
-    let inviteData = { Movie: movie, Email: email, Location: location };
+    let inviteData = { Movie: movie, Email: email, Location: location, Message:message };
     let inviteObject = {};
     // Construct JSON Object for User
     inviteObject[
@@ -65,6 +65,7 @@ class User {
           for (let k = 0; k < keylist.length; k++) {
             if (bodyList[k].Movie === movie && bodyList[k].Email === email) {
               value.Invites[keylist[k]] = null;
+              break;
             }
           }
           console.log("Hello from deleteInvite " + value);

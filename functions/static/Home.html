@@ -66,6 +66,7 @@
           console.log(invite);
           var name = invite.Email;
           var movie = invite.Movie;
+          var message = invite.Message;
           var param = "/Meet";
           var param2 = "/deleteInvite";
           param2 =
@@ -78,7 +79,7 @@
             name;
           param += "?location=" + invite.Location;
 
-          addTableEntry(name, movie, param, param2);
+          addTableEntry(name, movie, param, param2, message);
         });
       } else {
         // No user is signed in.
@@ -86,7 +87,7 @@
       }
     });
 
-    function addTableEntry(name, movie, param, param2) {
+    function addTableEntry(name, movie, param, param2, message) {
       // Get parent id id
       var table = document.getElementById("table");
 
@@ -103,10 +104,15 @@
       var movieText = document.createTextNode(movie);
       movieNode.appendChild(movieText);
 
+      // Create Message Entry
+      var messageNode = document.createElement("td");
+      var messageText = document.createTextNode(message);
+      messageNode.appendChild(messageText);
+
       // <td><a class="link" href="#">Accept</td>
       var linkNode = document.createElement("td");
       var anchorNode = document.createElement("a");
-      anchorNode.appendChild(document.createTextNode("Accept"));
+      anchorNode.appendChild(document.createTextNode("View"));
       anchorNode.setAttribute("class", "link");
       anchorNode.setAttribute("href", param);
       linkNode.appendChild(anchorNode);
@@ -121,6 +127,7 @@
       // Add entries to table row
       row.appendChild(nameNode);
       row.appendChild(movieNode);
+      row.appendChild(messageNode);
       row.appendChild(linkNode);
       row.appendChild(linkNode1);
 
@@ -134,6 +141,22 @@
         <!-- Brand -->
         <a class="navbar-brand" href="#">CineMeet</a>
         <!-- Toggler/collapsibe Button -->
+        <form class="navbar-form navbar-left" action="/FindMovie">
+          <div class="form-group input-group">
+            <input
+              id="search-bar"
+              class="form-control"
+              type="text"
+              placeholder="Search Movie.."
+              name="search"
+            />
+            <span class="input-group-addon">
+              <button id="submit-button" class="btn btn-primary" type="submit">
+                Find Movie
+              </button>
+            </span>
+          </div>
+        </form>
         <button
           class="navbar-toggler"
           type="button"
@@ -160,7 +183,7 @@
           <tr>
             <th>Email</th>
             <th>Movie</th>
-            <th></th>
+            <th>Message</th>
           </tr>
         </thead>
         <tbody id="table">
@@ -170,7 +193,7 @@
     </div>
     <div class="margin"></div>
     <div class="container-fluid">
-      <form action="/FindMovie">
+      <!-- <form action="/FindMovie">
         <div class="input-group">
           <div class="col-5">
             <input
@@ -190,7 +213,7 @@
             Find Movie
           </button>
         </div>
-      </form>
+      </form> -->
     </div>
   </body>
 </html>
