@@ -39,9 +39,11 @@
     <script>
       // postCoordinates("Goku", "Dragonball", { latitude: 2, longitude: 2 });
       // postCoordinates("Yatharth", "Dragonball", { latitude: 1, longitude: 2 });
-
+      var image = "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
       var urlParams = new URLSearchParams(window.location.search);
       var loc;
+      var map;
+      var infowindow;
 
       if (urlParams.has('location')) {
         loc = urlParams.get('location');
@@ -50,11 +52,12 @@
         alert('Invalid Input, missing location {?location} ');
       }
 
-      getCoordinates("Yatharth", "Dragonball");
       function myMap() {
         var mapProp = {
           center: new google.maps.LatLng(40.43, -86.91),
-          zoom: 5
+          zoom: 15, 
+          zoomControl: true,
+          panControl: true
         };
         var map = new google.maps.Map(
           document.getElementById("googleMap"),
@@ -62,29 +65,46 @@
         );
 
         var request = {
-      location: map.getCenter(),
-      radius: '500',
-      query: 'Google Sydney'
-     };
+          query: loc,
+          fields: ['name', 'geometry'],
+        };
 
+        service = new google.maps.places.PlacesService(map);
 
+        service.findPlaceFromQuery(request, function(results, status) {
+          if (status === google.maps.places.PlacesServiceStatus.OK) {
+            console.log(results);
+            if ( results.length > 0 ) {
+              createMarker(results[0], map)
+            }
+            map.setCenter(results[0].geometry.location);
+          }
+        });
+      
+        
     }
 
+    function createMarker(place, map) {
+        var marker = new google.maps.Marker({
+          map: map,
+          position: place.geometry.location,
+          icon: image
+        });
 
 
+        infowindow = new google.maps.InfoWindow();
+        google.maps.event.addListener(marker, 'click', function() {
+          infowindow.setContent(place.name);
+          infowindow.open(map, this);
+        });
 
-
-
-
-
-
-
+      }
 
 
 
 
 
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=&callback=myMap"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={APIKEY}&callback=myMap&libraries=places"></script>
   </body>
 </html>
