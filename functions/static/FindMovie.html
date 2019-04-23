@@ -34,20 +34,6 @@
     <script>
       firebase.auth().onAuthStateChanged(async function(user) {
         if (user) {
-          const urlParams = new URLSearchParams(window.location.search);
-          const myParam = urlParams.get("search");
-          console.log(
-            "http://www.omdbapi.com/?t=" +
-              myParam +
-              "&type=movie&apikey=46fcc81f"
-          );
-          let movieData = await fetch(
-            "http://www.omdbapi.com/?t=" +
-              myParam +
-              "&type=movie&apikey=46fcc81f"
-          );
-          movieData = await movieData.json();
-          console.log(movieData);
 
           $(document).ready(function() {
             const urlParams = new URLSearchParams(window.location.search);
