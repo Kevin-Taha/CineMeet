@@ -9,7 +9,7 @@ async function displayMovie(MovieName, Year = null) {
         omdbURL += `&y=${Year}`;
     }
     omdbURL += `&apikey=${omdbKey}`;
-    let movieData = await fetch(omdbURL);
+    let movieResponse = await fetch(omdbURL);
 
     let movie = document.getElementById("movie-info");
      // Erase previous contents (if applicable)
@@ -17,8 +17,8 @@ async function displayMovie(MovieName, Year = null) {
         movie.removeChild(movie.firstChild);
     }
 
-    if (movieData.ok) {
-        movieData = await movieData.json();
+    let movieData = await movieResponse.json();
+    if (movieResponse.ok && movieData["Response"] === "True") {
         // Movie found
         /*
             <div id="movie-info">
@@ -39,7 +39,6 @@ async function displayMovie(MovieName, Year = null) {
         movie.appendChild(caption);
     }
     else {
-        movieData = await movieData.json();
         // Movie not found
         /*
             <div id="movie">
