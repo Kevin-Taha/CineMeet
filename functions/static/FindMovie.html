@@ -31,9 +31,23 @@
     <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-database.js"></script>
     <script src="init-firebase.js"></script>
     <script>
-      firebase.auth().onAuthStateChanged(function(user) {
+      firebase.auth().onAuthStateChanged(async function(user) {
         if (user) {
-          console.log("Testing");
+          const urlParams = new URLSearchParams(window.location.search);
+          const myParam = urlParams.get("search");
+          console.log(
+            "http://www.omdbapi.com/?t=" +
+              myParam +
+              "&type=movie&apikey=46fcc81f"
+          );
+          let movieData = await fetch(
+            "http://www.omdbapi.com/?t=" +
+              myParam +
+              "&type=movie&apikey=46fcc81f"
+          );
+          movieData = await movieData.json();
+          console.log(movieData);
+
           $(document).ready(function() {
             const urlParams = new URLSearchParams(window.location.search);
             const myParam = urlParams.get("search");
@@ -56,7 +70,7 @@
     <br /><br />
     <div class="container-fluid">
       <form id="invite-form">
-        <div class="input-group">
+        <div class="form-group">
           <div class="col-5">
             <input
               id="search-bar"
@@ -65,13 +79,17 @@
               placeholder="Enter Email.."
               name="search"
             />
-            <input
+          </div>
+          <div class="col-5">
+              <input
               id="location"
               type="text"
               class="form-group"
               placeholder="Enter Location"
               name="Location"
             />
+          </div>
+          <div class="col-5">
             <textarea
               class="form-control"
               rows="5"
@@ -79,12 +97,13 @@
               name="message"
               placeholder="Enter Message"
             ></textarea>
-            <button class="btn btn-success" id="submit-button" type="submit">
-              Send Invite
-            </button>
+          </div>
             <input class="form-group" type="hidden" value="" name="Movie" />
             <input class="form-group" type="hidden" value="" name="From" />
           </div>
+          <button class="btn btn-success" id="submit-button" type="submit">
+              Send Invite
+            </button>
         </div>
       </form>
     </div>
