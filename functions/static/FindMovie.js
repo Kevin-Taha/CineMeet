@@ -4,7 +4,7 @@ var currentMovieJSON;
 async function displayMovie(MovieName, Year = null) {
     // Get single movie result from OMDB API
     let omdbKey = "46fcc81f";
-    let omdbURL = `http://www.omdbapi.com/?t=${MovieName}&type=movie`;
+    let omdbURL = `https://www.omdbapi.com/?t=${MovieName}&type=movie`;
     if (Year !== null) {
         omdbURL += `&y=${Year}`;
     }
