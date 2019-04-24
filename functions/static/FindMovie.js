@@ -64,6 +64,7 @@ async function displayMovie(MovieName, Year = null) {
 
 function displayMovieTable(movieData) {
   let table = document.getElementById("movie-info-table");
+  table.setAttribute('color', 'white');
 
   // Create IMDB rating row
   let imdbRow = document.getElementById("movie-info-imdb-rating");

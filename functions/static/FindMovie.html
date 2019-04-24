@@ -6,10 +6,18 @@
       
 
       @import url(https://fonts.googleapis.com/css?family=Sniglet|Raleway:900);
-  body{background: #000046; /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #000046, #1cb5e0); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #000046, #1cb5e0); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  body{
+    color: whitesmoke !important;
+    background: #3494e6; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #3494e6, #ff39f9); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #3494e6, #ec6ead); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
+  }
+
+  table {
+    background: grey;
+    border-radius: 15px;
+    font-family: 'Sniglet';
   }
       
     </style>
@@ -169,17 +177,17 @@
             <input class="form-group" type="hidden" value="" name="Movie" />
             <input class="form-group" type="hidden" value="" name="From" />
           </div>
-          <button class="btn btn-success" id="submit-button" type="submit" style="border-radius:10px">
+          <button class="btn btn-success" id="submit-button" type="submit" style="border-radius:10px; margin-left: 20px;">
               Send Invite
             </button>
         </div>
       </form>
     </div>
     <p style="color:white;"> Not what you're looking for? </p>
-    <ul id="movie-info-list">
+    <ul id="movie-info-list" style="color: whitesmoke">
       <!-- Populated by showMoreMovies() -->
     </ul>
-    <button class="btn btn-success" onclick="showMoreMovies()">
+    <button class="btn btn-success" onclick="showMoreMovies()" style="margin-left: 30px;">
       More Results
     </button>
     <button class="btn btn-success" onclick="searchAgain()">
