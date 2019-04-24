@@ -115,7 +115,7 @@ function displayMovieTable(movieData) {
   let releaseHdr = document.createElement("th");
   let releaseHdrText = document.createTextNode("Release Date");
   let releaseNode = document.createElement("td");
-  let releaseText = document.createTextNode(movieData["Release"]);
+  let releaseText = document.createTextNode(movieData["Released"]);
   releaseHdr.appendChild(releaseHdrText);
   releaseNode.appendChild(releaseText);
   releaseRow.appendChild(releaseHdr);
