@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+    <style>
+      
+
+      @import url(https://fonts.googleapis.com/css?family=Sniglet|Raleway:900);
+  body{
+    color: whitesmoke !important;
+    background: #3494e6; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #3494e6, rgb(71, 27, 65)); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #3494e6, rgb(71, 27, 65)); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+  }
+
+  table {
+    background: grey;
+    border-radius: 15px;
+    font-family: 'Sniglet';
+  }
+      
+    </style>
+
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="/FindMovie.css" />
+    <!-- Bootstrap-->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-app.js"></script>
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase-database.js"></script>
+    <script src="init-firebase.js"></script>
+    <script src="FindMovie.js"></script>
+    <script>
+      firebase.auth().onAuthStateChanged(async function(user) {
+        if (user) {
+
+          $(document).ready(function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const myParam = urlParams.get("search");
+            $('input[name="Movie"]').val(myParam);
+            $('input[name="From"]').val(user.email);
+            $("#invite-form").submit(function(eventObj) {
+              eventObj.preventDefault();
+              $("#invite-form").attr("action", "/SendInvite");
+              this.submit();
+            });
+          });
+        } else {
+          // No user is signed in.
+          window.location.replace("/");
+        }
+      });
+    </script>
+  </head>
+  <body>
+
+
+
+      <div class="container-fluid">
+          <nav class="navbar navbar bg-dark navbar-dark fixed-top">
+            <!-- Brand -->
+            <a class="navbar-brand" href="#">CineMeet</a>
+            <!-- Toggler/collapsibe Button -->
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target="#collapsibleNavbar"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Navbar links -->
+            <div class="collapse navbar-collapse" id="collapsibleNavbar">
+              <ul id="navigation" class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link" href="javascript:signOut()">Logout</a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="container-fluid">
+      
+    </div>
+    <br /><br />
+    <script>
+      const urlParams = new URLSearchParams(window.location.search);
+      const movie = urlParams.get("search");
+      displayMovie(movie);
+    </script>
+    <div id="movie-info">
+      <!-- Populated by displayMovie() -->
+    </div>
+    <table id="movie-info-table">
+      <!-- Populated by displayMovieTable() -->
+      <tr id="movie-info-imdb-rating"></tr>
+      <tr id="movie-info-director"></tr>
+      <tr id="movie-info-plot"></tr>
+      <tr id="movie-info-genre"></tr>
+      <tr id="movie-info-release"></tr>
+      <tr id="movie-info-rated"></tr>
+      <tr id="movie-info-runtime"></tr>
+    </table>
+    <br /><br />
+    <div class="container-fluid">
+      <form id="invite-form">
+        <div class="form-group">
+          <div class="col-5">
+            <input
+              id="search-bar"
+              type="text"
+              class="form-group"
+              placeholder="Enter Email.."
+              name="search"
+              style="border-radius:10px"
+              font-family: 'Sniglet', cursive;
+            />
+          </div>
+          <div class="col-5">
+              <input
+              id="location"
+              type="text"
+              class="form-group"
+              placeholder="Enter Location"
+              name="Location"
+              style="border-radius:10px"
+              font-family: 'Sniglet', cursive;
+            />
+          </div>
+          <div class="col-5" style="text-align: center">
+            <textarea
+              class="form-control"
+              rows="5"
+              id="message"
+              name="message"
+              placeholder="Enter Message"
+              style="border-radius:10px"
+              font-family: 'Sniglet', cursive;
+            ></textarea>
+          </div>
+            <input class="form-group" type="hidden" value="" name="Movie" />
+            <input class="form-group" type="hidden" value="" name="From" />
+          </div>
+          <button class="btn btn-success" id="submit-button" type="submit" style="border-radius:10px; margin-left: 20px;">
+              Send Invite
+            </button>
+        </div>
+      </form>
+    </div>
+    <p style="color:white;"> Not what you're looking for? </p>
+    <ul id="movie-info-list" style="color: whitesmoke">
+      <!-- Populated by showMoreMovies() -->
+    </ul>
+    <button class="btn btn-success" onclick="showMoreMovies()" style="margin-left: 30px;">
+      More Results
+    </button>
+    <button class="btn btn-success" onclick="searchAgain()">
+      Search again
+    </button>
+  </body>
+</html>
